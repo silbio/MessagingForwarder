@@ -6,7 +6,7 @@
         android:title="@string/pref_settings_title"
         android:key="pref_settings">
         <EditTextPreference
-            android:inputType="phone"
+            android:inputType="text"
             android:key="phone_number"
             android:selectAllOnFocus="true"
             android:singleLine="true"
