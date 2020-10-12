@@ -2,17 +2,24 @@ package dk.stacktrace.messagingforwarder;
 
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 class HttpPostThread implements Runnable {
     private static final String TAG = HttpPostThread.class.getName();
 
-    public HttpPostThread(URL url, String message) {
+    public HttpPostThread(URL url, String message, String slot, String timestamp, String secret) {
         this.url = url;
         this.message = message;
+        this.slot = slot;
+        this.timestamp = timestamp;
+        this.secret = secret;
     }
 
     @Override
@@ -21,10 +28,18 @@ class HttpPostThread implements Runnable {
         try {
             connection = (HttpURLConnection)this.url.openConnection();
             connection.setDoOutput(true);
+            connection.setDoInput(true);
             connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "text/plain; charset=UTF-8");
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
-            byte bytes[] = this.message.getBytes("UTF-8");
+        String reqBody = "secret="+ secret + "&message="+message+"&slot="+slot+"&timestamp="+timestamp;
+
+
+
+
+
+
+            byte[] bytes = reqBody.getBytes(StandardCharsets.UTF_8);
             OutputStream out = connection.getOutputStream();
             out.write(bytes);
             out.flush();
@@ -43,4 +58,7 @@ class HttpPostThread implements Runnable {
     }
     private final URL url;
     private final String message;
+    private final String slot;
+    private final String timestamp;
+    private final String secret;
 }
