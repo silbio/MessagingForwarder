@@ -19,6 +19,9 @@ import java.util.Set;
 
 public class IncomingMessageReceiver extends BroadcastReceiver {
     private static final String TAG = IncomingMessageReceiver.class.getName();
+//TODO => Add switch to change between prod and dev number/url combo
+    //TODO => Add new fields for dev phone and url, and turn the existing ones into prod phone/url
+    //TODO => Accept several phone numbers for both dev and prod, but only one url for each (check against an array instead of a String and allow for more fields to be created as the previous ones are used).
 
     @Override
     public void onReceive(Context context, Intent intent) {
